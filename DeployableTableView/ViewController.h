@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface ViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@property (nonatomic,assign) int selected;
 @property (nonatomic,retain) UITableView * utDeploy;
 @property (nonatomic,retain) NSMutableArray * keyArray;
 @property (nonatomic,retain) NSMutableArray * listArr;

@@ -97,7 +97,7 @@
     }else{
         [self.containArray addObject:[NSString stringWithFormat:@"%ld",sender.tag]];
     }
-    
+    self.selected = (int)sender.tag;
     [self filterData];
     [self.utDeploy reloadData];
 }
@@ -166,6 +166,28 @@
     return 50;
 }
 
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if (self.selected == indexPath.section) {
+        CATransform3D rotation;
+        rotation = CATransform3DMakeRotation( (90.0*M_PI)/180, 0.0, 0.7, 0.4);
+        rotation.m34 = 1.0/ -600;
+        
+        cell.layer.shadowColor = [[UIColor blackColor]CGColor];
+        cell.layer.shadowOffset = CGSizeMake(10, 10);
+        cell.alpha = 0;
+        cell.layer.transform = rotation;
+        cell.layer.anchorPoint = CGPointMake(0, 0.5);
+        
+        [UIView beginAnimations:@"rotation" context:NULL];
+        [UIView setAnimationDuration:0.2f];
+        cell.layer.transform = CATransform3DIdentity;
+        cell.alpha = 1;
+        cell.layer.shadowOffset = CGSizeMake(0, 0);
+        [UIView commitAnimations];
+    }
+}
+
 #pragma mark -- UITableViewDataSource
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -206,4 +228,8 @@
     return [arr count];
 }
 
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+}
 @end
